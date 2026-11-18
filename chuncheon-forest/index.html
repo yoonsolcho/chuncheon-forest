@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+<title>춘천의 숲 · CHUNCHEON FOREST</title>
+<style>
+  :root { --paper: rgba(255,252,240,.93); --ink:#3b3a30; --leaf:#4c9f70; --coin:#f2b632; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; overflow:hidden; font-family: Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif; color:var(--ink); }
+  #app { position:fixed; inset:0; touch-action:none; }
+  .panel { background:var(--paper); border-radius:16px; box-shadow:0 4px 14px rgba(0,0,0,.18); }
+  #hud { position:fixed; top:max(10px,env(safe-area-inset-top)); left:10px; padding:8px 12px; font-weight:700; line-height:1.6; }
+  #goal { position:fixed; top:max(10px,env(safe-area-inset-top)); left:50%; transform:translateX(-50%); padding:8px 14px; font-size:13px; max-width:46vw; text-align:center; }
+  @media (max-width:640px){ #goal{ top:auto; bottom:90px; max-width:90vw; } }
+  #statusBtn { position:fixed; top:max(10px,env(safe-area-inset-top)); right:10px; width:42px; height:42px; border:0; font-size:20px; cursor:pointer; }
+  #statusPanel { position:fixed; top:60px; right:10px; width:min(300px,86vw); padding:12px 14px; font-size:13px; line-height:1.6; }
+  #act { position:fixed; left:50%; bottom:max(24px,env(safe-area-inset-bottom)); transform:translateX(-50%); padding:14px 26px; font-size:17px; font-weight:800; border:0; border-radius:999px; background:var(--leaf); color:#fff; box-shadow:0 6px 16px rgba(0,0,0,.28); cursor:pointer; }
+  #act:disabled { background:#9aa79f; }
+  #toast { position:fixed; left:50%; top:30%; transform:translate(-50%,-10px); padding:10px 18px; border-radius:999px; background:rgba(40,40,30,.82); color:#fff; font-weight:700; opacity:0; transition:.25s; pointer-events:none; }
+  #toast.show { opacity:1; transform:translate(-50%,0); }
+  .modal { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(20,30,40,.45); z-index:5; padding:16px; }
+  .modal .panel { width:min(380px,100%); padding:22px; }
+  .modal h2 { margin:0 0 8px; } .modal p { margin:6px 0 14px; line-height:1.65; font-size:14px; }
+  input { width:100%; padding:12px; font-size:16px; border:2px solid #cfd8c4; border-radius:12px; margin-bottom:12px; }
+  .btn { width:100%; padding:12px; font-size:16px; font-weight:800; border:0; border-radius:12px; background:var(--leaf); color:#fff; cursor:pointer; }
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<div id="hud" class="panel"><div>👤 <span id="pname">-</span></div><div>🪙 <span id="coins">0</span></div><div>🕒 <span id="clock">--</span></div></div>
+<div id="goal" class="panel"></div>
+<button id="statusBtn" class="panel" title="프로토타입 상태">🧪</button>
+<div id="statusPanel" class="panel hidden">
+  <b>✅ 구현됨</b><br>이름 설정 · 맵 · 이동(클릭/터치/방향키·WASD) · 감자 심기/물주기/수확 · 재화 · 닭 펫 · 건설 부지 · 스카이워크 건설(전/후) · 관광지 소개 · 낮/밤<br><br>
+  <b>🚧 아직 미구현 (화면에 있어도 동작하지 않음)</b><br>실시간 멀티플레이 · 자리에 앉기 · NPC 대화/미션 · 스카이워크 외 다른 관광지
+</div>
+<button id="act" class="hidden"></button>
+<div id="toast"></div>
+
+<div id="welcome" class="modal"><div class="panel">
+  <h2>🌲 춘천의 숲</h2>
+  <p>호수와 숲이 어우러진 춘천 마을에 오신 걸 환영해요. 감자를 키워 재화를 모으고, 소양강 스카이워크를 지어 보세요.</p>
+  <input id="nameIn" maxlength="8" placeholder="캐릭터 이름 (최대 8자)" />
+  <button id="startBtn" class="btn">시작하기</button>
+</div></div>
+
+<div id="info" class="modal hidden"><div class="panel">
+  <h2 id="infoTitle"></h2><p id="infoBody"></p>
+  <button id="infoClose" class="btn">닫기</button>
+</div></div>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>
